@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Awesome Presentation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Rust in the Browser
+
+Modern. High-performance. Safe.
+
+---
+
+# Why
+
+You want to deploy complex applications within the browser but you
+you have problems with Javascript...
+
+## Javascript Not Type Safe
+
+- additional testing burden
+
+---
+
+# Why
+
+You want to deploy complex applications within the browser but you
+you have problems with Javascript...
+
+## Javascript Performance
+
+- interpretation and Jit can be non-deterministic
+- big memory allocations
+- garbage collector can interrupt interactivity
+
+## Javascript Numbers
+
+- no integer arithmatic
+- no control over FP precision
+
+---
+
+# Background
+
+## asm.js
+
+Asm.js is a special Javascript syntax that converts easily to machine code.
+
+## Web Assembly
+
+Why not take it one step further and expose a virtual machine?
+
+## Emscripten
+
+Compile C/C++ to asm.js or Web Assembly.
+
+But why should those languages have all the fun?
+
+---
+
+# How
+
+1. use nightly Rust
+1. use `rustup` to add the asm.js and wasm back ends
+1. install Emscripten for its LLVM compiler and linker
+1. `rustc` or `cargo` with `--target` option
+
+---
+
+# Problems
+
+## Browser APIs
+
+All browser APIs are accessed through Javascript so you have to marshal
+everything including function names.
+
+## Memory Management
+
+JS memory model and Rust memory model are completely different. You need
+to manage the lifetimes of JS objects (GC is trying to destroy them) and
+heap objects (compiler is trying to destroy them) when used outside their
+normal contexts.
+
+---
+
+# Problems
+
+## Web Assembly Early Stages
+
+No native Web Assembly APIs yet.
+
+Web Assembly still young so missing critical features such as
+concurrency.
+
+## Compiled Size
+
+The compiled size is pretty big. Work is being done on better link-time
+evaluation. For now, it should be considered for full-blown apps that
+perform a lot of computation client-side.
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
